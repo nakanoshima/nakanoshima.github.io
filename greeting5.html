@@ -21,40 +21,36 @@
       .message {
         position: absolute;
         top: 5%;
-        font-size: clamp(10px, 3vw, 18px);
+        font-size: clamp(8px, 2.5vw, 16px);
         font-weight: bold;
         color: orange;
-        white-space: pre;
+        white-space: pre-wrap;
         text-align: center;
         font-family: "Courier New", Courier, monospace;
         line-height: 1.2;
         opacity: 0;
         transform: scale(0.4); /* Start small */
         transition: opacity 2.5s ease-in-out, transform 2.5s linear; /* Faster growth */
-        max-width: 90vw; /* Ensure the text doesn't overflow on smaller screens */
+        overflow-x: hidden;
+        word-wrap: break-word;
+        max-width: 95vw;
       }
       .loremText {
         color: #0f0; /* Style for lorem ipsum text */
         opacity: 0; /* Start hidden */
         margin-top: 20px; /* Ensure it appears below the ASCII text */
         transition: opacity 2.5s ease-in-out; /* Fade in transition */
-        font-size: clamp(12px, 2vw, 18px); /* Scale with different devices */
-        text-align: center; /* Maintain readability */
       }
       .button-container {
         position: absolute;
-        bottom: clamp(
-          5%,
-          10vh,
-          15%
-        ); /* Better positioning on different screen sizes */
+        bottom: 10%;
         display: none;
       }
       .button {
         background-color: #0f0;
         color: black;
-        font-size: clamp(16px, 2vw, 24px); /* Scale properly */
-        padding: clamp(8px, 2vw, 14px) clamp(16px, 4vw, 24px); /* Better button scaling */
+        font-size: 20px;
+        padding: 10px 20px;
         border: none;
         cursor: pointer;
         font-weight: bold;
