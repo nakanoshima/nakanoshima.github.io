@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mog Mog Mogura</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+        background: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        color: white;
+        font-family: monospace;
+        position: relative;
+        flex-direction: column;
+      }
+      .message {
+        position: absolute;
+        top: 5%;
+        font-size: clamp(10px, 3vw, 18px);
+        font-weight: bold;
+        color: orange;
+        white-space: pre;
+        text-align: center;
+        font-family: "Courier New", Courier, monospace;
+        line-height: 1.2;
+        opacity: 0;
+        transform: scale(0.4); /* Start small */
+        transition: opacity 2.5s ease-in-out, transform 2.5s linear; /* Faster growth */
+        max-width: 90vw; /* Ensure the text doesn't overflow on smaller screens */
+      }
+      .loremText {
+        color: #0f0; /* Style for lorem ipsum text */
+        opacity: 0; /* Start hidden */
+        margin-top: 20px; /* Ensure it appears below the ASCII text */
+        transition: opacity 2.5s ease-in-out; /* Fade in transition */
+        font-size: clamp(12px, 2vw, 18px); /* Scale with different devices */
+        text-align: center; /* Maintain readability */
+      }
+      .button-container {
+        position: absolute;
+        bottom: clamp(
+          5%,
+          10vh,
+          15%
+        ); /* Better positioning on different screen sizes */
+        display: none;
+      }
+      .button {
+        background-color: #0f0;
+        color: black;
+        font-size: clamp(16px, 2vw, 24px); /* Scale properly */
+        padding: clamp(8px, 2vw, 14px) clamp(16px, 4vw, 24px); /* Better button scaling */
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+        border-radius: 5px;
+        transition: background 0.3s ease-in-out;
+      }
+      .button:hover {
+        background-color: #0a0;
+      }
+    </style>
+  </head>
+  <body>
+    <pre class="message" id="message">
+        ___   ___   ________   ______   ______   __  __                        
+        /__/\ /__/\ /_______/\ /_____/\ /_____/\ /_/\/_/\                       
+        \::\ \\  \ \\::: _  \ \\:::_ \ \\:::_ \ \\ \ \ \ \                      
+         \::\/_\ .\ \\::(_)  \ \\:(_) \ \\:(_) \ \\:\_\ \ \                     
+          \:: ___::\ \\:: __  \ \\: ___\/ \: ___\/ \::::_\/                     
+           \: \ \\::\ \\:.\ \  \ \\ \ \    \ \ \     \::\ \                     
+            \__\/ \::\/ \__\/\__\/ \_\/     \_\/      \__\/                     
+         __ __ __   ___   ___    ________  _________  ______                    
+        /_//_//_/\ /__/\ /__/\  /_______/\/________/\/_____/\                   
+        \:\\:\\:\ \\::\ \\  \ \ \__.::._\/\__.::.__\/\::::_\/_                  
+         \:\\:\\:\ \\::\/_\ .\ \   \::\ \    \::\ \   \:\/___/\                 
+          \:\\:\\:\ \\:: ___::\ \  _\::\ \__  \::\ \   \::___\/_                
+           \:\\:\\:\ \\: \ \\::\ \/__\::\__/\  \::\ \   \:\____/\               
+            \_______\/ \__\/ \::\/\________\/   \__\/    \_____\/               
+         ______   ________   __  __     ___ __ __   ______   _______    __      
+        /_____/\ /_______/\ /_/\/_/\   /__//_//_/\ /_____/\ /______/\  /__/\    
+        \:::_ \ \\::: _  \ \\ \ \ \ \  \::\| \| \ \\:::_ \ \\::::__\/__\.:\ \   
+         \:\ \ \ \\::(_)  \ \\:\_\ \ \  \:.      \ \\:\ \ \ \\:\ /____/\\::\ \  
+          \:\ \ \ \\:: __  \ \\::::_\/   \:.\-/\  \ \\:\ \ \ \\:\\_  _\/ \__\/_ 
+           \:\/.:| |\:.\ \  \ \ \::\ \    \. \  \  \ \\:\_\ \ \\:\_\ \ \   /__/\
+            \____/_/ \__\/\__\/  \__\/     \__\/ \__\/ \_____\/ \_____\/   \__\/
+    </pre>
+    <div id="loremText"></div>
+    <!-- Added lorem ipsum text container -->
+    <div class="button-container" id="buttonContainer">
+      <button class="button" onclick="window.location.href='greeting.html'">
+        Press Paw Here 🐾
+      </button>
+    </div>
+
+    <script>
+      let startTime = Date.now();
+      let messageFullyVisible = false;
+
+      // Animation timing variables
+      const totalAnimationTime = 0; // 0 seconds total
+      const messageFinalTime = 0; // Adjusted for smooth animation
+
+      function updateMessageVisibility() {
+        const currentTime = Date.now();
+        const elapsed = currentTime - startTime;
+
+        // Calculate message visibility and scaling
+        if (elapsed >= 0) {
+          // How far we are in the message animation (0 to 1)
+          const messageProgress = Math.min(1, elapsed / messageFinalTime);
+
+          document.getElementById("message").style.opacity = messageProgress;
+
+          // Scale from 0.4 to 1.2
+          const scaleSize = 0.4 + messageProgress * 0.8;
+          document.getElementById(
+            "message"
+          ).style.transform = `scale(${scaleSize})`;
+
+          // Show button ONLY after the greeting text is fully manifested (100% opacity)
+          if (messageProgress >= 1 && !messageFullyVisible) {
+            messageFullyVisible = true;
+            document.getElementById("buttonContainer").style.display = "block";
+            writeLoremText(); // Start writing lorem ipsum text
+          }
+        }
+      }
+
+      const loremText =
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+      let currentIndex = 0;
+
+      function writeLoremText() {
+        const loremContainer = document.getElementById("loremText");
+        const interval = setInterval(() => {
+          if (currentIndex < loremText.length) {
+            loremContainer.textContent += loremText[currentIndex];
+            currentIndex++;
+          } else {
+            clearInterval(interval);
+            loremContainer.style.opacity = 1; // Fade in the lorem ipsum text
+          }
+        }, 100); // Write one letter every 100 milliseconds
+      }
+
+      updateMessageVisibility(); // Start the message visibility update immediately
+      const animationInterval = setInterval(updateMessageVisibility, 50);
+    </script>
+  </body>
+</html>
