@@ -36,12 +36,19 @@
         max-width: 90vw; /* Responsive */
         height: auto; /* Responsive */
         object-fit: contain; /* Responsive */
+        z-index: 1; /* Reduced z-index */
       }
       .loremText {
-        color: #0f0; /* Style for lorem ipsum text */
-        opacity: 0; /* Start hidden */
-        margin-top: 20px; /* Ensure it appears below the ASCII text */
+        position: relative; /* Allow it to flow below the image */
+        margin-top: 20px; /* Spacing below the image */
+        color: white; /* White text */
+        opacity: 0; /* Start hidden for fade-in effect */
         transition: opacity 2.5s ease-in-out; /* Fade in transition */
+        white-space: pre-wrap; /* Preserve line breaks */
+        max-width: 90vw; /* Responsive width */
+        overflow-y: auto; /* Allow vertical scrolling if needed */
+        text-align: left; /* Left justify the text */
+        z-index: 3; /* Stays above other elements if needed */
       }
       .button-container {
         position: absolute;
@@ -71,7 +78,7 @@
       class="message"
       id="message"
     />
-    <div id="loremText"></div>
+    <div id="loremText" class="loremText"></div>
     <!-- Added lorem ipsum text container -->
     <div class="button-container" id="buttonContainer">
       <button class="button" onclick="window.location.href='greeting.html'">
@@ -113,19 +120,40 @@
         }
       }
 
-      const loremText =
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+      const loremText = `Dearest Cariad Mole-san
+ I want you to know know that your Troll LOVES you very, very, VERY much!
+ I think about the Mole-san every day and wonder:
+ - is it warm enough...?
+ - does it have enough pigs ears...?
+ - has it zzzzzz'd itself...?
+ - is it bouncy...?
+ 
+ Today is White Day and I want you to order some ONIGIRI 🍙 for yourself on Uber Eats
+    (I was going to order some, but i dont know what time you are awake 
+    or if you will be in the MM)
+ Troll will pay for it so dont worry about the cost
+ 
+ I miss you so much,
+ I cant wait to be reunited
+ We trully are ONE CREATURE!
+ 
+ With all my chompy-wobbles green love,
+ Your Troll`;
       let currentIndex = 0;
 
       function writeLoremText() {
         const loremContainer = document.getElementById("loremText");
+        // Immediately make the lorem text visible
+        loremContainer.style.opacity = 1;
         const interval = setInterval(() => {
           if (currentIndex < loremText.length) {
-            loremContainer.textContent += loremText[currentIndex];
+            loremContainer.innerHTML += loremText[currentIndex].replace(
+              /\n/g,
+              "<br>"
+            );
             currentIndex++;
           } else {
             clearInterval(interval);
-            loremContainer.style.opacity = 1; // Fade in the lorem ipsum text
           }
         }, 100); // Write one letter every 100 milliseconds
       }
