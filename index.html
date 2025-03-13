@@ -2,7 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
     <title>Mog Mog Mogura</title>
     <style>
       body {
@@ -28,16 +31,13 @@
       }
       .message {
         position: absolute;
-        font-size: 14px;
-        font-weight: bold;
-        color: orange;
-        white-space: pre;
-        text-align: center;
-        font-family: "Courier New", Courier, monospace;
-        line-height: 1.2;
+        top: 50%;
+        left: 50%;
+        max-width: 90%;
+        height: auto;
         opacity: 0;
-        transform: scale(0.4); /* Start small */
-        transition: opacity 2.5s ease-in-out, transform 2.5s linear; /* Faster growth */
+        transform: translate(-50%, -50%) scale(0.4);
+        transition: opacity 2.5s ease-in-out, transform 2.5s linear;
       }
       .button-container {
         position: absolute;
@@ -62,29 +62,12 @@
   </head>
   <body>
     <canvas id="matrixCanvas"></canvas>
-    <pre class="message" id="message">
-        ___   ___   ________   ______   ______   __  __                        
-        /__/\ /__/\ /_______/\ /_____/\ /_____/\ /_/\/_/\                       
-        \::\ \\  \ \\::: _  \ \\:::_ \ \\:::_ \ \\ \ \ \ \                      
-         \::\/_\ .\ \\::(_)  \ \\:(_) \ \\:(_) \ \\:\_\ \ \                     
-          \:: ___::\ \\:: __  \ \\: ___\/ \: ___\/ \::::_\/                     
-           \: \ \\::\ \\:.\ \  \ \\ \ \    \ \ \     \::\ \                     
-            \__\/ \::\/ \__\/\__\/ \_\/     \_\/      \__\/                     
-         __ __ __   ___   ___    ________  _________  ______                    
-        /_//_//_/\ /__/\ /__/\  /_______/\/________/\/_____/\                   
-        \:\\:\\:\ \\::\ \\  \ \ \__.::._\/\__.::.__\/\::::_\/_                  
-         \:\\:\\:\ \\::\/_\ .\ \   \::\ \    \::\ \   \:\/___/\                 
-          \:\\:\\:\ \\:: ___::\ \  _\::\ \__  \::\ \   \::___\/_                
-           \:\\:\\:\ \\: \ \\::\ \/__\::\__/\  \::\ \   \:\____/\               
-            \_______\/ \__\/ \::\/\________\/   \__\/    \_____\/               
-         ______   ________   __  __     ___ __ __   ______   _______    __      
-        /_____/\ /_______/\ /_/\/_/\   /__//_//_/\ /_____/\ /______/\  /__/\    
-        \:::_ \ \\::: _  \ \\ \ \ \ \  \::\| \| \ \\:::_ \ \\::::__\/__\.:\ \   
-         \:\ \ \ \\::(_)  \ \\:\_\ \ \  \:.      \ \\:\ \ \ \\:\ /____/\\::\ \  
-          \:\ \ \ \\:: __  \ \\::::_\/   \:.\-/\  \ \\:\ \ \ \\:\\_  _\/ \__\/_ 
-           \:\/.:| |\:.\ \  \ \ \::\ \    \. \  \  \ \\:\_\ \ \\:\_\ \ \   /__/\
-            \____/_/ \__\/\__\/  \__\/     \__\/ \__\/ \_____\/ \_____\/   \__\/
-    </pre>
+    <img
+      class="message"
+      id="message"
+      src="happywhiteday.jpg"
+      alt="Happy White Day"
+    />
     <div class="button-container" id="buttonContainer">
       <button class="button" onclick="window.location.href='greeting.html'">
         Press Paw Here 🐾
@@ -167,7 +150,7 @@
           const scaleSize = 0.4 + messageProgress * 0.8;
           document.getElementById(
             "message"
-          ).style.transform = `scale(${scaleSize})`;
+          ).style.transform = `translate(-50%, -50%) scale(${scaleSize})`;
 
           // Show button ONLY after the greeting text is fully manifested (100% opacity)
           if (messageProgress >= 1 && !messageFullyVisible) {
